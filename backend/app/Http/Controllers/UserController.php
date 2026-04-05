@@ -38,6 +38,9 @@ class UserController extends Controller
             'role'       => 'member',
         ]);
 
+        return response()->json($user->only(['id', 'name', 'email', 'role']), 201);
+    }
+
     public function destroy(Request $request, User $user)
     {
         if ($request->user()->role !== 'admin') {
