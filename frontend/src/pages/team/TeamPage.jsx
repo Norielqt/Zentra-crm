@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 
 export default function TeamPage() {
   const { isAdmin } = useAuth();
@@ -27,7 +28,7 @@ export default function TeamPage() {
     setMembers((prev) => prev.filter((u) => u.id !== id));
   };
 
-  if (loading) return <div className="loading-screen">Loading…</div>;
+  if (loading) return <LoadingScreen />;
 
   return (
     <>

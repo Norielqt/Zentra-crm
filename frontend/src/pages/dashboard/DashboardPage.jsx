@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight, DollarSign, LayoutDashboard } from 'lucide-react';
 import api from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 
 const STATUSES = ['New Lead', 'Contacted', 'Qualified', 'Proposal', 'Closed'];
 
@@ -81,7 +82,7 @@ export default function DashboardPage() {
     setOnboardingDismissed(true);
   };
 
-  if (loading) return <div className="loading-screen">Loading dashboard…</div>;
+  if (loading) return <LoadingScreen />;
 
   const showOnboarding = onboarding && !onboarding.all_done && !onboardingDismissed;
 

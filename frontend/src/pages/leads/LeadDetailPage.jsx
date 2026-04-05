@@ -4,6 +4,7 @@ import { ArrowLeft, UserCheck, Trash2, Plus, Pencil } from 'lucide-react';
 import api from '../../api/axios';
 import Badge from '../../components/ui/Badge';
 import Modal from '../../components/ui/Modal';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 
 const STAGES = ['New Lead', 'Contacted', 'Qualified', 'Proposal', 'Closed'];
 
@@ -43,8 +44,8 @@ export default function LeadDetailPage() {
     navigate('/leads');
   };
 
-  if (loading) return <div className="loading-screen">Loading...</div>;
-  if (!lead) return <div className="loading-screen">Lead not found.</div>;
+  if (loading) return <LoadingScreen />;
+  if (!lead) return <LoadingScreen />;
 
   return (
     <>

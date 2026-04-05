@@ -4,6 +4,7 @@ import { ArrowLeft, Trash2, Plus, Upload, Download, Pencil } from 'lucide-react'
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
 import Badge from '../../components/ui/Badge';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 
 export default function ClientDetailPage() {
   const { id } = useParams();
@@ -68,8 +69,8 @@ export default function ClientDetailPage() {
     }
   };
 
-  if (loading) return <div className="loading-screen">Loading...</div>;
-  if (!client) return <div className="loading-screen">Client not found.</div>;
+  if (loading) return <LoadingScreen />;
+  if (!client) return <LoadingScreen />;
 
   return (
     <>
