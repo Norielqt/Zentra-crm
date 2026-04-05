@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight, DollarSign, X } from 'lucide-react';
+import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight, DollarSign } from 'lucide-react';
 import api from '../../api/axios';
 
 const STATUSES = ['New Lead', 'Contacted', 'Qualified', 'Proposal', 'Closed'];
@@ -217,34 +217,36 @@ function OnboardingPanel({ steps, onDismiss }) {
   return (
     <div className="onboarding-panel">
       <div className="onboarding-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <CheckCircle2 size={18} color="var(--primary)" />
+        <div className="onboarding-header-left">
+          <CheckCircle2 size={20} className="onboarding-icon" />
           <div>
-            <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)' }}>Getting Started</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{done} of {steps.length} steps completed</div>
+            <div className="onboarding-title">Getting Started</div>
+            <div className="onboarding-subtitle">{done} of {steps.length} steps completed</div>
           </div>
           <span className="onboarding-badge">{pct}%</span>
         </div>
-        <button className="icon-btn" onClick={onDismiss} title="Dismiss">
-          <X size={14} />
+        <button className="onboarding-dismiss" onClick={onDismiss}>
+          Dismiss
         </button>
       </div>
-      <div style={{ height: 4, background: 'var(--border)', borderRadius: 4, margin: '10px 0 14px', overflow: 'hidden' }}>
-        <div style={{ height: '100%', width: `${pct}%`, background: 'var(--primary)', borderRadius: 4, transition: 'width 0.5s ease' }} />
+
+      <div className="onboarding-progress-track">
+        <div className="onboarding-progress-fill" style={{ width: `${pct}%` }} />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+
+      <div className="onboarding-steps">
         {steps.map((step) => (
           <div key={step.key} className={`onboarding-step${step.done ? ' done' : ''}`}>
             <div className="onboarding-step-check">
-              {step.done ? <CheckCircle2 size={14} /> : <div style={{ width: 14, height: 14, borderRadius: '50%', border: '2px solid var(--border)' }} />}
+              {step.done && <CheckCircle2 size={14} />}
             </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)' }}>{step.label}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{step.description}</div>
+            <div className="onboarding-step-body">
+              <div className="onboarding-step-label">{step.label}</div>
+              <div className="onboarding-step-desc">{step.description}</div>
             </div>
             {!step.done && step.action && (
               <button
-                className="btn btn-secondary btn-sm"
+                className="onboarding-step-btn"
                 onClick={() => navigate(step.action.path)}
               >
                 {step.action.label}
