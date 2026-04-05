@@ -23,6 +23,8 @@ Route::middleware(['auth:sanctum', 'company.tenant'])->group(function () {
 
     // Users (company members)
     Route::get('/users', [UserController::class, 'index']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index']);

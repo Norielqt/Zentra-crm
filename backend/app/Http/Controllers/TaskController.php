@@ -10,14 +10,17 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Task::where('company_id', $request->user()->company_id)
+        $user  = $request->user();
+        $query = Task::where('company_id', $user->company_id)
             ->with(['assignedUser', 'lead', 'client']);
 
         if ($request->has('lead_id')) {
             $query->where('lead_id', $request->lead_id);
-        }
-        if ($request->has('client_id')) {
+        } elseif ($request->has('client_id')) {
             $query->where('client_id', $request->client_id);
+        } elseif ($user->role === 'member') {
+            // Members only see their own assigned tasks on the main tasks page
+            $query->where('assigned_user_id', $user->id);
         }
 
         return response()->json($query->orderBy('due_date')->get());

@@ -11,12 +11,18 @@ class Client extends Model
 
     protected $fillable = [
         'company_id',
+        'assigned_user_id',
         'lead_id',
         'name',
         'email',
         'phone',
         'notes',
     ];
+
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
+    }
 
     public function company()
     {

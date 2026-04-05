@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight } from 'lucide-react';
+import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight, DollarSign } from 'lucide-react';
 import api from '../../api/axios';
 
 const STATUSES = ['New Lead', 'Contacted', 'Qualified', 'Proposal', 'Closed'];
@@ -123,17 +123,31 @@ export default function DashboardPage() {
               <Link to="/leads" className="btn btn-secondary btn-sm">View All</Link>
             </div>
             <div className="card-body">
+              {stats?.total_revenue_pipeline > 0 && (
+                <div className="pipeline-total-revenue">
+                  <DollarSign size={14} />
+                  <span>Total pipeline value: <strong>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(stats.total_revenue_pipeline)}</strong></span>
+                </div>
+              )}
               {STATUSES.map((s) => {
-                const count = stats?.leads_by_status?.[s] ?? 0;
-                const total = stats?.total_leads || 1;
-                const pct = Math.round((count / total) * 100);
+                const count   = stats?.leads_by_status?.[s] ?? 0;
+                const total   = stats?.total_leads || 1;
+                const pct     = Math.round((count / total) * 100);
+                const revenue = stats?.revenue_by_status?.[s];
                 return (
                   <div key={s} style={{ marginBottom: '16px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                       <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>{s}</span>
-                      <span style={{ fontSize: '12px', fontWeight: 700, color: STATUS_COLORS[s] }}>
-                        {count} <span style={{ fontWeight: 500, opacity: 0.6 }}>({pct}%)</span>
-                      </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        {revenue > 0 && (
+                          <span style={{ fontSize: '11px', fontWeight: 600, color: STATUS_COLORS[s], opacity: 0.8 }}>
+                            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(revenue)}
+                          </span>
+                        )}
+                        <span style={{ fontSize: '12px', fontWeight: 700, color: STATUS_COLORS[s] }}>
+                          {count} <span style={{ fontWeight: 500, opacity: 0.6 }}>({pct}%)</span>
+                        </span>
+                      </div>
                     </div>
                     <div style={{ height: '8px', background: STATUS_TRACK_COLORS[s], borderRadius: '6px', overflow: 'hidden' }}>
                       <div style={{ height: '100%', width: `${pct}%`, background: STATUS_COLORS[s], borderRadius: '6px', transition: 'width 0.6s ease' }} />

@@ -813,6 +813,83 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
 .mb-4 { margin-bottom: 16px; }
 .mb-6 { margin-bottom: 24px; }
 
+/* ====== Role Badges ====== */
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.role-badge--admin  { background: rgba(0,49,72,0.12); color: var(--primary); }
+.role-badge--member { background: rgba(77,184,232,0.12); color: #0369A1; }
+
+.sidebar-user-role-row { margin-top: 3px; }
+
+/* ====== Kanban Deal Value ====== */
+.kanban-card-deal {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #065F46;
+  background: #D1FAE5;
+  border-radius: 5px;
+  padding: 2px 7px;
+  margin: 4px 0;
+}
+.kanban-column-revenue {
+  font-size: 11.5px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+.kanban-assignee {
+  display: inline-flex;
+  align-items: center;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+/* ====== Pipeline Revenue ====== */
+.pipeline-total-revenue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #065F46;
+  margin-bottom: 20px;
+}
+
+/* ====== Team Page ====== */
+.btn-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+.btn-icon:hover { border-color: var(--text-muted); color: var(--text); }
+.btn-icon.danger:hover { border-color: var(--danger); color: var(--danger); background: #FFF5F5; }
+
 /* ====== Dashboard Layout ====== */
 .dashboard-bottom-grid {
   display: grid;

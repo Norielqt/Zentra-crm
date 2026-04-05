@@ -11,13 +11,20 @@ class Lead extends Model
 
     protected $fillable = [
         'company_id',
+        'assigned_user_id',
         'name',
         'email',
         'phone',
         'source',
         'status',
         'notes',
+        'deal_value',
     ];
+
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
+    }
 
     public function company()
     {

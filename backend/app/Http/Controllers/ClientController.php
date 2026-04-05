@@ -10,25 +10,34 @@ class ClientController extends Controller
 {
     public function index(Request $request)
     {
-        $clients = Client::where('company_id', $request->user()->company_id)
+        $user  = $request->user();
+        $query = Client::where('company_id', $user->company_id)
             ->with('lead')
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
 
-        return response()->json($clients);
+        if ($user->role === 'member') {
+            $query->where('assigned_user_id', $user->id);
+        }
+
+        return response()->json($query->get());
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name'    => 'required|string|max:255',
-            'email'   => 'nullable|email|max:255',
-            'phone'   => 'nullable|string|max:50',
-            'notes'   => 'nullable|string',
-            'lead_id' => 'nullable|exists:leads,id',
+            'name'             => 'required|string|max:255',
+            'email'            => 'nullable|email|max:255',
+            'phone'            => 'nullable|string|max:50',
+            'notes'            => 'nullable|string',
+            'lead_id'          => 'nullable|exists:leads,id',
+            'assigned_user_id' => 'nullable|exists:users,id',
         ]);
 
-        $data['company_id'] = $request->user()->company_id;
+        $user = $request->user();
+        $data['company_id'] = $user->company_id;
+        if ($user->role === 'member') {
+            $data['assigned_user_id'] = $user->id;
+        }
         $client = Client::create($data);
 
         ActivityService::log('client_created', "Client created: {$client->name}", 'client', $client->id);
