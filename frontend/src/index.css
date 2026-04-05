@@ -850,8 +850,10 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-.role-badge--admin  { background: rgba(0,49,72,0.12); color: var(--primary); }
+.role-badge--admin  { background: rgba(0,49,72,0.1);   color: var(--primary); }
 .role-badge--member { background: rgba(77,184,232,0.12); color: #0369A1; }
+[data-theme="dark"] .role-badge--admin  { background: rgba(77,184,232,0.15); color: #4DB8E8; }
+[data-theme="dark"] .role-badge--member { background: rgba(77,184,232,0.12); color: #6AC7EE; }
 
 .sidebar-user-role-row { margin-top: 3px; }
 
@@ -1223,21 +1225,13 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
 
 /* ====== Onboarding Checklist ====== */
 .onboarding-panel {
-  background: linear-gradient(135deg, #003148 0%, #00567A 100%);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
   border-radius: var(--radius);
-  padding: 24px 28px;
+  padding: 22px 26px;
   margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
-}
-.onboarding-panel::before {
-  content: '';
-  position: absolute;
-  top: -40px; right: -40px;
-  width: 200px; height: 200px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 50%;
-  pointer-events: none;
+  box-shadow: var(--shadow);
 }
 .onboarding-header {
   display: flex;
@@ -1246,33 +1240,32 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
   margin-bottom: 14px;
 }
 .onboarding-header-left { display: flex; align-items: center; gap: 12px; }
-.onboarding-icon { color: rgba(255,255,255,0.85); flex-shrink: 0; }
+.onboarding-icon { color: var(--primary); flex-shrink: 0; }
 .onboarding-badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: rgba(255,255,255,0.15);
-  color: #fff;
+  background: var(--primary-light);
+  color: var(--primary);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 4px 10px;
+  padding: 3px 10px;
   border-radius: 999px;
 }
-.onboarding-title { font-size: 15px; font-weight: 700; color: #fff; }
-.onboarding-subtitle { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+.onboarding-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.onboarding-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 .onboarding-progress-track {
   width: 100%;
   height: 5px;
-  background: rgba(255,255,255,0.18);
+  background: var(--border);
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 16px;
 }
 .onboarding-progress-fill {
   height: 100%;
-  background: #fff;
+  background: var(--primary);
   border-radius: 999px;
   transition: width 0.6s ease;
 }
@@ -1281,37 +1274,41 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
   display: flex;
   align-items: center;
   gap: 14px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px 16px;
+  padding: 13px 16px;
   transition: background 0.15s;
 }
-.onboarding-step.done { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+.onboarding-step.done {
+  background: var(--surface-alt);
+  border-color: var(--border);
+  opacity: 0.75;
+}
 .onboarding-step-check {
   width: 26px; height: 26px;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.35);
+  border: 2px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  color: rgba(255,255,255,0.35);
+  color: var(--text-muted);
   transition: all 0.2s;
 }
 .onboarding-step.done .onboarding-step-check {
-  background: rgba(255,255,255,0.9);
+  background: #1A9E53;
   border-color: transparent;
-  color: #003148;
+  color: #fff;
 }
 .onboarding-step-body { flex: 1; }
-.onboarding-step-label { font-size: 13px; font-weight: 600; color: #fff; }
+.onboarding-step-label { font-size: 13px; font-weight: 600; color: var(--text); }
 .onboarding-step.done .onboarding-step-label { opacity: 0.5; text-decoration: line-through; }
-.onboarding-step-desc  { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+.onboarding-step-desc  { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 .onboarding-step-btn {
   font-size: 12px;
   font-weight: 600;
-  color: #fff;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.28);
+  color: var(--primary);
+  background: var(--primary-light);
+  border: 1px solid rgba(0,49,72,0.15);
   border-radius: 6px;
   padding: 6px 13px;
   cursor: pointer;
@@ -1319,68 +1316,53 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
   white-space: nowrap;
   flex-shrink: 0;
 }
-.onboarding-step-btn:hover { background: rgba(255,255,255,0.25); }
+.onboarding-step-btn:hover { background: rgba(0,49,72,0.12); }
 .onboarding-dismiss {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  border: 1px solid var(--border);
   border-radius: 7px;
   padding: 5px 13px;
-  color: rgba(255,255,255,0.65);
+  color: var(--text-muted);
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s;
   flex-shrink: 0;
 }
-.onboarding-dismiss:hover { background: rgba(255,255,255,0.18); color: #fff; }
+.onboarding-dismiss:hover { background: var(--border); color: var(--text); }
 
 /* Dark mode overrides for onboarding panel */
 [data-theme="dark"] .onboarding-panel {
-  background: linear-gradient(135deg, #0D2233 0%, #152D40 100%);
-  border: 1px solid rgba(77, 184, 232, 0.2);
-  box-shadow: 0 0 0 1px rgba(77,184,232,0.06), inset 0 1px 0 rgba(255,255,255,0.04);
+  background: var(--surface);
+  border-color: var(--border);
+  border-left-color: #4DB8E8;
 }
 [data-theme="dark"] .onboarding-icon { color: #4DB8E8; }
 [data-theme="dark"] .onboarding-badge {
   background: rgba(77, 184, 232, 0.15);
   color: #4DB8E8;
 }
-[data-theme="dark"] .onboarding-title { color: var(--text); }
-[data-theme="dark"] .onboarding-subtitle { color: var(--text-muted); }
-[data-theme="dark"] .onboarding-progress-track { background: var(--border); }
 [data-theme="dark"] .onboarding-progress-fill { background: #4DB8E8; }
 [data-theme="dark"] .onboarding-step {
-  background: rgba(77, 184, 232, 0.05);
-  border-color: rgba(77, 184, 232, 0.15);
+  background: var(--surface-alt);
+  border-color: var(--border);
 }
 [data-theme="dark"] .onboarding-step.done {
   background: rgba(255,255,255,0.02);
-  border-color: var(--border);
+  opacity: 0.6;
 }
-[data-theme="dark"] .onboarding-step-check {
-  border-color: var(--border);
-  color: var(--text-muted);
-}
+[data-theme="dark"] .onboarding-step-check { border-color: var(--border); }
 [data-theme="dark"] .onboarding-step.done .onboarding-step-check {
-  background: #4DB8E8;
+  background: #1A9E53;
   border-color: transparent;
-  color: #0F1923;
+  color: #fff;
 }
-[data-theme="dark"] .onboarding-step-label { color: var(--text); }
-[data-theme="dark"] .onboarding-step.done .onboarding-step-label { opacity: 0.4; }
-[data-theme="dark"] .onboarding-step-desc { color: var(--text-muted); }
 [data-theme="dark"] .onboarding-step-btn {
   color: #4DB8E8;
   background: rgba(77, 184, 232, 0.1);
   border-color: rgba(77, 184, 232, 0.25);
 }
 [data-theme="dark"] .onboarding-step-btn:hover { background: rgba(77, 184, 232, 0.2); }
-[data-theme="dark"] .onboarding-dismiss {
-  background: rgba(255,255,255,0.04);
-  border-color: var(--border);
-  color: var(--text-muted);
-}
-[data-theme="dark"] .onboarding-dismiss:hover { background: var(--border); color: var(--text); }
 
 /* ====== Export Button ====== */
 .btn-export {

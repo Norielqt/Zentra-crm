@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight, DollarSign } from 'lucide-react';
 import api from '../../api/axios';
+import { useAuth } from '../../context/AuthContext';
 
 const STATUSES = ['New Lead', 'Contacted', 'Qualified', 'Proposal', 'Closed'];
 
@@ -29,9 +30,10 @@ const INSIGHT_CONFIG = {
   success: { icon: CheckCircle2,   color: '#1A9E53', bg: '#F0FDF4', border: '#BBF7D0', label: 'Great work' },
 };
 
-const ONBOARDING_DISMISSED_KEY = 'zentra_onboarding_dismissed';
+const ONBOARDING_DISMISSED_KEY = (userId) => `zentra_onboarding_dismissed_${userId}`;
 
 export default function DashboardPage() {
+  const { user } = useAuth();
   const [stats, setStats]         = useState(null);
   const [activities, setActivities] = useState([]);
   const [insights, setInsights]   = useState([]);
@@ -39,9 +41,7 @@ export default function DashboardPage() {
   const [loading, setLoading]     = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [onboarding, setOnboarding] = useState(null);
-  const [onboardingDismissed, setOnboardingDismissed] = useState(
-    () => localStorage.getItem(ONBOARDING_DISMISSED_KEY) === 'true'
-  );
+  const [onboardingDismissed, setOnboardingDismissed] = useState(false);
 
   const fetchInsights = useCallback(async (showSpinner = false) => {
     if (showSpinner) setRefreshing(true);
@@ -53,6 +53,14 @@ export default function DashboardPage() {
       setRefreshing(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (user?.id) {
+      setOnboardingDismissed(
+        localStorage.getItem(ONBOARDING_DISMISSED_KEY(user.id)) === 'true'
+      );
+    }
+  }, [user?.id]);
 
   useEffect(() => {
     Promise.all([
@@ -69,7 +77,7 @@ export default function DashboardPage() {
   }, [fetchInsights]);
 
   const dismissOnboarding = () => {
-    localStorage.setItem(ONBOARDING_DISMISSED_KEY, 'true');
+    if (user?.id) localStorage.setItem(ONBOARDING_DISMISSED_KEY(user.id), 'true');
     setOnboardingDismissed(true);
   };
 
