@@ -850,10 +850,15 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-.role-badge--admin  { background: rgba(0,49,72,0.1);   color: var(--primary); }
-.role-badge--member { background: rgba(77,184,232,0.12); color: #0369A1; }
+/* Default (used in tables / general UI — light mode) */
+.role-badge--admin  { background: rgba(0,49,72,0.1);    color: var(--primary); }
+.role-badge--member { background: rgba(3,105,161,0.1);  color: #0369A1; }
+/* Dark mode (general UI) */
 [data-theme="dark"] .role-badge--admin  { background: rgba(77,184,232,0.15); color: #4DB8E8; }
 [data-theme="dark"] .role-badge--member { background: rgba(77,184,232,0.12); color: #6AC7EE; }
+/* Sidebar is always dark — badges must always be light-on-dark inside it */
+.sidebar .role-badge--admin  { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
+.sidebar .role-badge--member { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.7);  }
 
 .sidebar-user-role-row { margin-top: 3px; }
 
