@@ -98,6 +98,24 @@ Zentra CRM/
 
 ---
 
+## Demo Account
+
+A pre-seeded demo workspace is available with realistic CRM data — no setup required:
+
+| Field    | Value                        |
+|----------|------------------------------|
+| Email    | `demo.zentracrm@gmail.com`   |
+| Password | `demo.zentracrm`             |
+| Role     | Admin (full access)          |
+
+The demo includes **13 leads** across all 5 pipeline stages, **3 clients**, **12 tasks** (Todo / In Progress / Done), and **4 automation rules** — ready to explore immediately.
+
+A second team member account is also seeded (`sarah.demo@zentracrm.com` / `demo.zentracrm`, role: Member) to demonstrate role-based access control.
+
+> To reset demo data: `php artisan migrate:fresh --seed`
+
+---
+
 ## Quick Start
 
 ### Backend (Laravel)
