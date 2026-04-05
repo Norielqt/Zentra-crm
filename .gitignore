@@ -1,0 +1,35 @@
+# Dependencies
+backend/vendor/
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+
+# Environment files (contain secrets)
+backend/.env
+backend/.env.backup
+
+# Laravel caches
+backend/bootstrap/cache/*.php
+backend/storage/logs/*.log
+backend/storage/framework/cache/
+backend/storage/framework/sessions/
+backend/storage/framework/views/
+
+# Uploaded files (runtime data)
+backend/storage/app/public/
+
+# Compiled assets
+backend/public/hot
+backend/public/storage
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.user
+
+# PHP
+*.phar
