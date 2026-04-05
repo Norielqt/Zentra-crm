@@ -82,4 +82,40 @@ class ClientController extends Controller
             abort(403);
         }
     }
+
+    public function exportCsv(Request $request)
+    {
+        $user  = $request->user();
+        $query = Client::where('company_id', $user->company_id)
+            ->orderBy('created_at', 'desc');
+
+        if ($user->role === 'member') {
+            $query->where('assigned_user_id', $user->id);
+        }
+
+        $clients = $query->get();
+
+        $headers = [
+            'Content-Type'        => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="clients.csv"',
+        ];
+
+        $callback = function () use ($clients) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['ID', 'Name', 'Email', 'Phone', 'Notes', 'Created']);
+            foreach ($clients as $client) {
+                fputcsv($handle, [
+                    $client->id,
+                    $client->name,
+                    $client->email ?? '',
+                    $client->phone ?? '',
+                    $client->notes ?? '',
+                    $client->created_at->toDateString(),
+                ]);
+            }
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

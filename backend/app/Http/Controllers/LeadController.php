@@ -144,4 +144,44 @@ class LeadController extends Controller
             abort(403);
         }
     }
+
+    public function exportCsv(Request $request)
+    {
+        $user  = $request->user();
+        $query = Lead::where('company_id', $user->company_id)
+            ->with('assignedUser')
+            ->orderBy('created_at', 'desc');
+
+        if ($user->role === 'member') {
+            $query->where('assigned_user_id', $user->id);
+        }
+
+        $leads = $query->get();
+
+        $headers = [
+            'Content-Type'        => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="leads.csv"',
+        ];
+
+        $callback = function () use ($leads) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['ID', 'Name', 'Email', 'Phone', 'Source', 'Status', 'Deal Value', 'Assigned To', 'Created']);
+            foreach ($leads as $lead) {
+                fputcsv($handle, [
+                    $lead->id,
+                    $lead->name,
+                    $lead->email ?? '',
+                    $lead->phone ?? '',
+                    $lead->source ?? '',
+                    $lead->status,
+                    $lead->deal_value ?? '',
+                    $lead->assignedUser?->name ?? '',
+                    $lead->created_at->toDateString(),
+                ]);
+            }
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

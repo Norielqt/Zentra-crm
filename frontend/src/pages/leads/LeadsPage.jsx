@@ -14,7 +14,7 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Plus, Mail, Phone, DollarSign } from 'lucide-react';
+import { Plus, Mail, Phone, DollarSign, Download } from 'lucide-react';
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
 import { useAuth } from '../../context/AuthContext';
@@ -84,9 +84,23 @@ export default function LeadsPage() {
     <>
       <div className="page-header">
         <h1 className="page-title">Leads Pipeline</h1>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          <Plus size={16} /> Add Lead
-        </button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button
+            className="btn-export"
+            onClick={async () => {
+              const res = await api.get('/leads/export', { responseType: 'blob' });
+              const url = URL.createObjectURL(res.data);
+              const a   = document.createElement('a');
+              a.href = url; a.download = 'leads.csv'; a.click();
+              URL.revokeObjectURL(url);
+            }}
+          >
+            <Download size={14} /> Export CSV
+          </button>
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+            <Plus size={16} /> Add Lead
+          </button>
+        </div>
       </div>
 
       <div className="page-body" style={{ overflow: 'hidden' }}>

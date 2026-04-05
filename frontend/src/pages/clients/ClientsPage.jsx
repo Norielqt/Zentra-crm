@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, Download } from 'lucide-react';
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
 
@@ -25,9 +25,23 @@ export default function ClientsPage() {
     <>
       <div className="page-header">
         <h1 className="page-title">Clients</h1>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          <Plus size={16} /> Add Client
-        </button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button
+            className="btn-export"
+            onClick={async () => {
+              const res = await api.get('/clients/export', { responseType: 'blob' });
+              const url = URL.createObjectURL(res.data);
+              const a   = document.createElement('a');
+              a.href = url; a.download = 'clients.csv'; a.click();
+              URL.revokeObjectURL(url);
+            }}
+          >
+            <Download size={14} /> Export CSV
+          </button>
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+            <Plus size={16} /> Add Client
+          </button>
+        </div>
       </div>
 
       <div className="page-body">

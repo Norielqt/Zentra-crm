@@ -8,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\InsightsController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -29,12 +31,18 @@ Route::middleware(['auth:sanctum', 'company.tenant'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/insights', [InsightsController::class, 'index']);
+    Route::get('/onboarding', [OnboardingController::class, 'index']);
+
+    // Search
+    Route::get('/search', [SearchController::class, 'index']);
 
     // Leads
+    Route::get('/leads/export', [LeadController::class, 'exportCsv']);
     Route::apiResource('/leads', LeadController::class);
     Route::post('/leads/{lead}/convert', [LeadController::class, 'convert']);
 
     // Clients
+    Route::get('/clients/export', [ClientController::class, 'exportCsv']);
     Route::apiResource('/clients', ClientController::class);
 
     // Tasks

@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight, DollarSign } from 'lucide-react';
+import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight, DollarSign, X } from 'lucide-react';
 import api from '../../api/axios';
 
 const STATUSES = ['New Lead', 'Contacted', 'Qualified', 'Proposal', 'Closed'];
@@ -29,6 +29,8 @@ const INSIGHT_CONFIG = {
   success: { icon: CheckCircle2,   color: '#1A9E53', bg: '#F0FDF4', border: '#BBF7D0', label: 'Great work' },
 };
 
+const ONBOARDING_DISMISSED_KEY = 'zentra_onboarding_dismissed';
+
 export default function DashboardPage() {
   const [stats, setStats]         = useState(null);
   const [activities, setActivities] = useState([]);
@@ -36,6 +38,10 @@ export default function DashboardPage() {
   const [insightsLoading, setInsightsLoading] = useState(true);
   const [loading, setLoading]     = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [onboarding, setOnboarding] = useState(null);
+  const [onboardingDismissed, setOnboardingDismissed] = useState(
+    () => localStorage.getItem(ONBOARDING_DISMISSED_KEY) === 'true'
+  );
 
   const fetchInsights = useCallback(async (showSpinner = false) => {
     if (showSpinner) setRefreshing(true);
@@ -52,15 +58,24 @@ export default function DashboardPage() {
     Promise.all([
       api.get('/dashboard'),
       api.get('/activities'),
-    ]).then(([statsRes, activitiesRes]) => {
+      api.get('/onboarding'),
+    ]).then(([statsRes, activitiesRes, onboardingRes]) => {
       setStats(statsRes.data);
       setActivities(activitiesRes.data.slice(0, 8));
+      setOnboarding(onboardingRes.data);
     }).finally(() => setLoading(false));
 
     fetchInsights();
   }, [fetchInsights]);
 
+  const dismissOnboarding = () => {
+    localStorage.setItem(ONBOARDING_DISMISSED_KEY, 'true');
+    setOnboardingDismissed(true);
+  };
+
   if (loading) return <div className="loading-screen">Loading dashboard…</div>;
+
+  const showOnboarding = onboarding && !onboarding.all_done && !onboardingDismissed;
 
   return (
     <>
@@ -74,6 +89,10 @@ export default function DashboardPage() {
       </div>
 
       <div className="page-body">
+        {showOnboarding && (
+          <OnboardingPanel steps={onboarding.steps} onDismiss={dismissOnboarding} />
+        )}
+
         {/* Stats Row */}
         <div className="stats-grid">
           <StatCard
@@ -187,6 +206,54 @@ export default function DashboardPage() {
         </div>
       </div>
     </>
+  );
+}
+
+function OnboardingPanel({ steps, onDismiss }) {
+  const navigate = useNavigate();
+  const done = steps.filter((s) => s.done).length;
+  const pct  = Math.round((done / steps.length) * 100);
+
+  return (
+    <div className="onboarding-panel">
+      <div className="onboarding-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <CheckCircle2 size={18} color="var(--primary)" />
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)' }}>Getting Started</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{done} of {steps.length} steps completed</div>
+          </div>
+          <span className="onboarding-badge">{pct}%</span>
+        </div>
+        <button className="icon-btn" onClick={onDismiss} title="Dismiss">
+          <X size={14} />
+        </button>
+      </div>
+      <div style={{ height: 4, background: 'var(--border)', borderRadius: 4, margin: '10px 0 14px', overflow: 'hidden' }}>
+        <div style={{ height: '100%', width: `${pct}%`, background: 'var(--primary)', borderRadius: 4, transition: 'width 0.5s ease' }} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {steps.map((step) => (
+          <div key={step.key} className={`onboarding-step${step.done ? ' done' : ''}`}>
+            <div className="onboarding-step-check">
+              {step.done ? <CheckCircle2 size={14} /> : <div style={{ width: 14, height: 14, borderRadius: '50%', border: '2px solid var(--border)' }} />}
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)' }}>{step.label}</div>
+              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{step.description}</div>
+            </div>
+            {!step.done && step.action && (
+              <button
+                className="btn btn-secondary btn-sm"
+                onClick={() => navigate(step.action.path)}
+              >
+                {step.action.label}
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
