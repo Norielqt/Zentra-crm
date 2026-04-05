@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Trash2, Plus, Upload, Download } from 'lucide-react';
+import { ArrowLeft, Trash2, Plus, Upload, Download, Pencil } from 'lucide-react';
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
 import Badge from '../../components/ui/Badge';
@@ -88,8 +88,13 @@ export default function ClientDetailPage() {
           </div>
         </div>
         <div className="page-header-actions">
-          <button className="btn btn-secondary" onClick={() => setShowEdit(true)}>Edit</button>
-          <button className="btn btn-danger btn-sm" onClick={handleDelete}><Trash2 size={14} /></button>
+          <div className="btn-group-divider" />
+          <button className="btn-icon" onClick={() => setShowEdit(true)} title="Edit client">
+            <Pencil size={15} />
+          </button>
+          <button className="btn-icon-danger" onClick={handleDelete} title="Delete client">
+            <Trash2 size={15} />
+          </button>
         </div>
       </div>
 

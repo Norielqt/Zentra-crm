@@ -700,10 +700,62 @@ body {
 }
 .btn-secondary:hover:not(:disabled) { background: var(--surface-alt); border-color: #C8D5DE; }
 
-.btn-danger { background: var(--danger); color: #fff; }
-.btn-danger:hover:not(:disabled) { background: #C0271D; }
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border: 1.5px solid rgba(217,48,37,0.3);
+}
+.btn-danger:hover:not(:disabled) {
+  background: rgba(217,48,37,0.06);
+  border-color: var(--danger);
+}
 
-.btn-success { background: var(--success); color: #fff; }
+.btn-success {
+  background: var(--surface);
+  color: #059669;
+  border: 1.5px solid rgba(16,185,129,0.35);
+  box-shadow: none;
+}
+.btn-success:hover:not(:disabled) {
+  background: rgba(16,185,129,0.07);
+  border-color: #059669;
+}
+
+/* Icon-only action button (edit / delete in header) */
+.btn-icon {
+  width: 36px; height: 36px;
+  padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.btn-icon:hover { background: var(--surface-alt); color: var(--text); border-color: #C8D5DE; }
+
+.btn-icon-danger {
+  width: 36px; height: 36px;
+  padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  border: 1.5px solid rgba(217,48,37,0.25);
+  background: var(--surface);
+  color: var(--danger);
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.btn-icon-danger:hover { background: rgba(217,48,37,0.06); border-color: var(--danger); }
+
+/* Divider between action groups in header */
+.btn-group-divider {
+  width: 1px; height: 24px;
+  background: var(--border);
+  flex-shrink: 0;
+}
 .btn-sm { padding: 6px 12px; font-size: 12px; }
 .btn-full { width: 100%; justify-content: center; }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { ArrowLeft, UserCheck, Trash2, Plus } from 'lucide-react';
+import { ArrowLeft, UserCheck, Trash2, Plus, Pencil } from 'lucide-react';
 import api from '../../api/axios';
 import Badge from '../../components/ui/Badge';
 import Modal from '../../components/ui/Modal';
@@ -76,9 +76,12 @@ export default function LeadDetailPage() {
               View Client →
             </Link>
           )}
-          <button className="btn btn-secondary" onClick={() => setShowEdit(true)}>Edit</button>
-          <button className="btn btn-danger btn-sm" onClick={handleDelete}>
-            <Trash2 size={14} />
+          <div className="btn-group-divider" />
+          <button className="btn-icon" onClick={() => setShowEdit(true)} title="Edit lead">
+            <Pencil size={15} />
+          </button>
+          <button className="btn-icon-danger" onClick={handleDelete} title="Delete lead">
+            <Trash2 size={15} />
           </button>
         </div>
       </div>
