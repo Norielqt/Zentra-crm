@@ -49,14 +49,23 @@ export default function LeadDetailPage() {
   return (
     <>
       <div className="page-header">
-        <div className="flex-row">
-          <Link to="/leads" className="btn btn-secondary btn-sm">
-            <ArrowLeft size={14} /> Back
-          </Link>
-          <h1 className="page-title">{lead.name}</h1>
-          <Badge status={lead.status} />
+        <div className="page-header-left">
+          <div className="page-header-avatar">
+            {lead.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()}
+          </div>
+          <div className="page-header-text">
+            <div className="page-breadcrumb">
+              <Link to="/leads" className="page-breadcrumb-link"><ArrowLeft size={11} /> Leads</Link>
+              <span className="page-breadcrumb-sep">/</span>
+              <span>{lead.name}</span>
+            </div>
+            <h1 className="page-title">
+              {lead.name}
+              <Badge status={lead.status} />
+            </h1>
+          </div>
         </div>
-        <div className="flex-row">
+        <div className="page-header-actions">
           {!lead.client && (
             <button className="btn btn-success" onClick={handleConvert}>
               <UserCheck size={15} /> Convert to Client

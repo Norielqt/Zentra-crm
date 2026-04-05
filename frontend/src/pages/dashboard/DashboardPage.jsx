@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight, DollarSign } from 'lucide-react';
+import { Users, UserCheck, CheckSquare, TrendingUp, Sparkles, AlertTriangle, AlertCircle, Info, CheckCircle2, Zap, RefreshCw, ArrowRight, DollarSign, LayoutDashboard } from 'lucide-react';
 import api from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
 
@@ -88,11 +88,16 @@ export default function DashboardPage() {
   return (
     <>
       <div className="page-header">
-        <div>
-          <h1 className="page-title">Dashboard</h1>
-          <p className="page-subtitle">
-            {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-          </p>
+        <div className="page-header-left">
+          <div className="page-header-icon" style={{ background: 'var(--primary-light)', color: 'var(--primary)' }}>
+            <LayoutDashboard size={18} />
+          </div>
+          <div className="page-header-text">
+            <h1 className="page-title">Dashboard</h1>
+            <p className="page-subtitle">
+              {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+            </p>
+          </div>
         </div>
       </div>
 

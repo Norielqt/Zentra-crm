@@ -14,7 +14,7 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Plus, Mail, Phone, DollarSign, Download } from 'lucide-react';
+import { Plus, Mail, Phone, DollarSign, Download, Users } from 'lucide-react';
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
 import { useAuth } from '../../context/AuthContext';
@@ -83,8 +83,19 @@ export default function LeadsPage() {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Leads Pipeline</h1>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div className="page-header-left">
+          <div className="page-header-icon" style={{ background: 'rgba(124,58,237,0.1)', color: '#7C3AED' }}>
+            <Users size={18} />
+          </div>
+          <div className="page-header-text">
+            <h1 className="page-title">
+              Leads Pipeline
+              <span className="page-header-count">{leads.length}</span>
+            </h1>
+            <p className="page-subtitle">Drag cards between columns to update stage</p>
+          </div>
+        </div>
+        <div className="page-header-actions">
           <button
             className="btn-export"
             onClick={async () => {

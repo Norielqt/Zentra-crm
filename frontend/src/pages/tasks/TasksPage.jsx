@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, CheckSquare } from 'lucide-react';
 import api from '../../api/axios';
 import Badge from '../../components/ui/Badge';
 import Modal from '../../components/ui/Modal';
@@ -33,10 +33,23 @@ export default function TasksPage() {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Tasks</h1>
-        <button className="btn btn-primary" onClick={() => { setEditTask(null); setShowModal(true); }}>
-          <Plus size={16} /> Add Task
-        </button>
+        <div className="page-header-left">
+          <div className="page-header-icon" style={{ background: 'rgba(245,158,11,0.1)', color: '#D97706' }}>
+            <CheckSquare size={18} />
+          </div>
+          <div className="page-header-text">
+            <h1 className="page-title">
+              Tasks
+              <span className="page-header-count">{tasks.length}</span>
+            </h1>
+            <p className="page-subtitle">Track follow-ups, meetings, and action items</p>
+          </div>
+        </div>
+        <div className="page-header-actions">
+          <button className="btn btn-primary" onClick={() => { setEditTask(null); setShowModal(true); }}>
+            <Plus size={16} /> Add Task
+          </button>
+        </div>
       </div>
 
       <div className="page-body">

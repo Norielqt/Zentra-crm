@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Search, Download } from 'lucide-react';
+import { Plus, Search, Download, UserCheck } from 'lucide-react';
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
 
@@ -24,8 +24,19 @@ export default function ClientsPage() {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Clients</h1>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div className="page-header-left">
+          <div className="page-header-icon" style={{ background: 'rgba(16,185,129,0.1)', color: '#059669' }}>
+            <UserCheck size={18} />
+          </div>
+          <div className="page-header-text">
+            <h1 className="page-title">
+              Clients
+              <span className="page-header-count">{clients.length}</span>
+            </h1>
+            <p className="page-subtitle">Manage converted leads and client relationships</p>
+          </div>
+        </div>
+        <div className="page-header-actions">
           <button
             className="btn-export"
             onClick={async () => {

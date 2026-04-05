@@ -74,11 +74,20 @@ export default function ClientDetailPage() {
   return (
     <>
       <div className="page-header">
-        <div className="flex-row">
-          <Link to="/clients" className="btn btn-secondary btn-sm"><ArrowLeft size={14} /> Back</Link>
-          <h1 className="page-title">{client.name}</h1>
+        <div className="page-header-left">
+          <div className="page-header-avatar" style={{ background: 'rgba(16,185,129,0.12)', color: '#059669' }}>
+            {client.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()}
+          </div>
+          <div className="page-header-text">
+            <div className="page-breadcrumb">
+              <Link to="/clients" className="page-breadcrumb-link"><ArrowLeft size={11} /> Clients</Link>
+              <span className="page-breadcrumb-sep">/</span>
+              <span>{client.name}</span>
+            </div>
+            <h1 className="page-title">{client.name}</h1>
+          </div>
         </div>
-        <div className="flex-row">
+        <div className="page-header-actions">
           <button className="btn btn-secondary" onClick={() => setShowEdit(true)}>Edit</button>
           <button className="btn btn-danger btn-sm" onClick={handleDelete}><Trash2 size={14} /></button>
         </div>

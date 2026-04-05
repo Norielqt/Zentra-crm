@@ -32,13 +32,23 @@ export default function TeamPage() {
   return (
     <>
       <div className="page-header">
-        <div>
-          <h1 className="page-title">Team</h1>
-          <p className="page-subtitle">Manage who has access to your workspace</p>
+        <div className="page-header-left">
+          <div className="page-header-icon" style={{ background: 'rgba(14,134,212,0.1)', color: '#0E86D4' }}>
+            <Users size={18} />
+          </div>
+          <div className="page-header-text">
+            <h1 className="page-title">
+              Team
+              <span className="page-header-count">{members.length}</span>
+            </h1>
+            <p className="page-subtitle">Manage who has access to your workspace</p>
+          </div>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          <Plus size={16} /> Invite Member
-        </button>
+        <div className="page-header-actions">
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+            <Plus size={16} /> Invite Member
+          </button>
+        </div>
       </div>
 
       <div className="page-body">

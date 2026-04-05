@@ -46,13 +46,23 @@ export default function AutomationsPage() {
   return (
     <>
       <div className="page-header">
-        <div>
-          <h1 className="page-title">Automations</h1>
-          <p className="page-subtitle">Rules that run automatically when events happen</p>
+        <div className="page-header-left">
+          <div className="page-header-icon" style={{ background: 'rgba(139,92,246,0.1)', color: '#7C3AED' }}>
+            <Zap size={18} />
+          </div>
+          <div className="page-header-text">
+            <h1 className="page-title">
+              Automations
+              <span className="page-header-count">{automations.length}</span>
+            </h1>
+            <p className="page-subtitle">Rules that run automatically when events happen</p>
+          </div>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          <Plus size={16} /> New Rule
-        </button>
+        <div className="page-header-actions">
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+            <Plus size={16} /> New Rule
+          </button>
+        </div>
       </div>
 
       <div className="page-body">
