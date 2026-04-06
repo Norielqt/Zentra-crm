@@ -1123,6 +1123,7 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
 }
 .dashboard-bottom-grid .insights-panel {
   grid-column: 1 / -1;
+  grid-row: 2;
 }
 
 /* ====== AI Insights Panel ====== */
@@ -1141,7 +1142,8 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  background: #001E2C;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
 
@@ -1155,42 +1157,42 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
   width: 34px;
   height: 34px;
   border-radius: 9px;
-  background: rgba(77,184,232,0.15);
-  border: 1px solid rgba(77,184,232,0.22);
+  background: var(--primary-light);
+  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #4DB8E8;
+  color: var(--primary);
   flex-shrink: 0;
 }
 
 .insights-title {
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text);
   line-height: 1;
   margin-bottom: 3px;
 }
 
 .insights-subtitle {
   font-size: 11.5px;
-  color: rgba(255,255,255,0.42);
+  color: var(--text-muted);
 }
 
 .insights-refresh {
   width: 30px;
   height: 30px;
   border-radius: 7px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: rgba(255,255,255,0.45);
+  color: var(--text-muted);
   transition: all 0.15s;
 }
-.insights-refresh:hover { border-color: rgba(77,184,232,0.4); color: #4DB8E8; background: rgba(77,184,232,0.1); }
+.insights-refresh:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
 .insights-refresh:disabled { opacity: 0.35; cursor: not-allowed; }
 .insights-refresh.spinning svg { animation: spin 1s linear infinite; }
 
@@ -1303,6 +1305,10 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
 }
 
 /* Dark mode */
+[data-theme="dark"] .insights-header { background: var(--surface); border-color: var(--border); }
+[data-theme="dark"] .insights-icon-wrap { background: rgba(77,184,232,0.15); border-color: rgba(77,184,232,0.22); color: #4DB8E8; }
+[data-theme="dark"] .insights-refresh { border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.45); }
+[data-theme="dark"] .insights-refresh:hover { border-color: rgba(77,184,232,0.4); color: #4DB8E8; background: rgba(77,184,232,0.1); }
 [data-theme="dark"] .insight-card { border-left-color: #4DB8E8; }
 [data-theme="dark"] .insight-card--urgent  { border-left-color: #F87171; }
 [data-theme="dark"] .insight-card--success { border-left-color: #4ADE80; }
