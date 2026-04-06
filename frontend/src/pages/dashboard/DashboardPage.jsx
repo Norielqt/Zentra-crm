@@ -139,20 +139,13 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* AI Insights + Pipeline + Activity */}
+        {/* Pipeline + Activity + AI Insights */}
         <div className="dashboard-bottom-grid">
-          {/* AI Insights */}
-          <InsightsPanel
-            insights={insights}
-            loading={insightsLoading}
-            refreshing={refreshing}
-            onRefresh={() => fetchInsights(true)}
-          />
-
           {/* Pipeline Overview */}
           <div className="card">
             <div className="card-header">
               <span className="card-title">Pipeline Overview</span>
+              <span className="card-subtitle">{stats?.total_leads ?? 0} leads across {STATUSES.length} stages</span>
               <Link to="/leads" className="btn btn-secondary btn-sm">View All</Link>
             </div>
             <div className="card-body">
@@ -168,22 +161,22 @@ export default function DashboardPage() {
                 const pct     = Math.round((count / total) * 100);
                 const revenue = stats?.revenue_by_status?.[s];
                 return (
-                  <div key={s} style={{ marginBottom: '16px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>{s}</span>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <div key={s} className="pipeline-stage">
+                    <div className="pipeline-stage-header">
+                      <span className="pipeline-stage-name">{s}</span>
+                      <div className="pipeline-stage-meta">
                         {revenue > 0 && (
-                          <span style={{ fontSize: '11px', fontWeight: 600, color: STATUS_COLORS[s], opacity: 0.8 }}>
+                          <span className="pipeline-stage-revenue" style={{ color: STATUS_COLORS[s] }}>
                             {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(revenue)}
                           </span>
                         )}
-                        <span style={{ fontSize: '12px', fontWeight: 700, color: STATUS_COLORS[s] }}>
-                          {count} <span style={{ fontWeight: 500, opacity: 0.6 }}>({pct}%)</span>
+                        <span className="pipeline-stage-count" style={{ color: STATUS_COLORS[s] }}>
+                          {count} <span className="pipeline-stage-pct">({pct}%)</span>
                         </span>
                       </div>
                     </div>
-                    <div style={{ height: '8px', background: STATUS_TRACK_COLORS[s], borderRadius: '6px', overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${pct}%`, background: STATUS_COLORS[s], borderRadius: '6px', transition: 'width 0.6s ease' }} />
+                    <div className="pipeline-stage-track" style={{ background: STATUS_TRACK_COLORS[s] }}>
+                      <div className="pipeline-stage-fill" style={{ width: `${pct}%`, background: STATUS_COLORS[s] }} />
                     </div>
                   </div>
                 );
@@ -195,6 +188,7 @@ export default function DashboardPage() {
           <div className="card">
             <div className="card-header">
               <span className="card-title">Recent Activity</span>
+              <span className="card-subtitle">Last 8 actions</span>
             </div>
             <div className="card-body" style={{ padding: '0 22px' }}>
               {activities.length === 0 ? (
@@ -217,6 +211,14 @@ export default function DashboardPage() {
               )}
             </div>
           </div>
+
+          {/* AI Insights */}
+          <InsightsPanel
+            insights={insights}
+            loading={insightsLoading}
+            refreshing={refreshing}
+            onRefresh={() => fetchInsights(true)}
+          />
         </div>
       </div>
     </>
@@ -344,12 +346,12 @@ function InsightsPanel({ insights, loading, refreshing, onRefresh }) {
 
 function StatCard({ icon, bg, label, value, accent }) {
   return (
-    <div className="stat-card" style={{ borderTopColor: accent }}>
-      <div className="stat-card-top">
-        <span className="stat-label">{label}</span>
-        <div className="stat-icon" style={{ background: bg }}>{icon}</div>
+    <div className="stat-card">
+      <div className="stat-card-icon" style={{ background: bg, color: accent }}>{icon}</div>
+      <div className="stat-card-body">
+        <div className="stat-card-label">{label}</div>
+        <div className="stat-card-value">{value}</div>
       </div>
-      <div className="stat-value">{value}</div>
     </div>
   );
 }
