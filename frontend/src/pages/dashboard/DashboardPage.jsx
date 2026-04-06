@@ -24,11 +24,11 @@ const STATUS_TRACK_COLORS = {
 };
 
 const INSIGHT_CONFIG = {
-  urgent:  { icon: AlertTriangle, color: '#D93025', bg: '#FFF5F5', border: '#FED7D7', label: 'Urgent' },
-  warning: { icon: AlertCircle,   color: '#D97706', bg: '#FFFBEB', border: '#FDE68A', label: 'Heads up' },
-  action:  { icon: Zap,           color: '#7C3AED', bg: '#FAF5FF', border: '#E9D5FF', label: 'Opportunity' },
-  info:    { icon: Info,           color: '#0E86D4', bg: '#EFF6FF', border: '#BFDBFE', label: 'Info' },
-  success: { icon: CheckCircle2,   color: '#1A9E53', bg: '#F0FDF4', border: '#BBF7D0', label: 'Great work' },
+  urgent:  { icon: AlertTriangle, color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Urgent' },
+  warning: { icon: AlertCircle,   color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Heads up' },
+  action:  { icon: Zap,           color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Opportunity' },
+  info:    { icon: Info,          color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Info' },
+  success: { icon: CheckCircle2,  color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Great work' },
 };
 
 const ONBOARDING_DISMISSED_KEY = (userId) => `zentra_onboarding_dismissed_${userId}`;

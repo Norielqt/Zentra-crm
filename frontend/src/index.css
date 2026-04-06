@@ -1261,6 +1261,12 @@ tbody td { padding: 13px 16px; vertical-align: middle; }
 }
 .insight-action-btn:hover { opacity: 0.75; }
 
+/* Dark mode — insight card text/icons use accent instead of near-black */
+[data-theme="dark"] .insight-card { background: rgba(77,184,232,0.08) !important; border-color: rgba(77,184,232,0.18) !important; }
+[data-theme="dark"] .insight-type-badge { color: var(--primary) !important; background: rgba(77,184,232,0.14) !important; }
+[data-theme="dark"] .insight-card-title { color: var(--primary) !important; }
+[data-theme="dark"] .insight-action-btn { color: var(--primary) !important; border-color: rgba(77,184,232,0.28) !important; background: rgba(77,184,232,0.08) !important; }
+
 /* Skeleton loader */
 .insights-loading {
   grid-column: 1 / -1;
