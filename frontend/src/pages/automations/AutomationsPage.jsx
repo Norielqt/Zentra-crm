@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Plus, Zap, Trash2, ToggleLeft, ToggleRight } from 'lucide-react';
+import { Plus, Zap, Trash2, ArrowRight } from 'lucide-react';
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
 
@@ -66,11 +66,11 @@ export default function AutomationsPage() {
       </div>
 
       <div className="page-body">
-        {/* Built-in automations info banner */}
+        {/* Info banner */}
         <div className="automation-banner">
-          <Zap size={16} className="automation-banner-icon" />
+          <div className="automation-banner-icon-wrap"><Zap size={14} /></div>
           <div>
-            <strong>Built-in automations are always active:</strong> Daily overdue task scanner at 07:00 and
+            <strong>Built-in automations always run:</strong> Daily overdue task scanner at 07:00 and
             idle lead detection at 07:05. Add custom rules below to trigger tasks, notes, or status changes.
           </div>
         </div>
@@ -122,39 +122,44 @@ function AutomationRow({ automation: a, onToggle, onDelete }) {
   const triggerSummary = () => {
     let label = EVENT_LABELS[a.trigger_event] || a.trigger_event;
     if (a.trigger_event === 'lead_status_changed' && a.trigger_value) {
-      label = `Lead status changes to "${a.trigger_value}"`;
+      label = `Lead status → "${a.trigger_value}"`;
     }
     return label;
   };
 
   return (
-    <div className={`automation-row${a.is_active ? '' : ' inactive'}`}>
-      <div className="automation-row-indicator" style={{ background: a.is_active ? 'var(--accent)' : 'var(--border)' }} />
-      <div className="automation-row-body">
-        <div className="automation-row-name">{a.name}</div>
-        <div className="automation-row-meta">
-          <span className="automation-chip trigger">When: {triggerSummary()}</span>
-          <span className="automation-arrow">→</span>
-          <span className="automation-chip action">Then: {actionSummary()}</span>
+    <div className={`automation-card${a.is_active ? '' : ' inactive'}`}>
+      <div className="automation-card-header">
+        <div className="automation-card-name">{a.name}</div>
+        <div className="automation-card-controls">
+          <span className={`automation-status-pill${a.is_active ? ' active' : ''}`}>
+            {a.is_active ? 'Active' : 'Inactive'}
+          </span>
+          <button className="automation-toggle-btn" onClick={onToggle} title={a.is_active ? 'Disable' : 'Enable'}>
+            <span className={`toggle-track${a.is_active ? ' on' : ''}`}>
+              <span className="toggle-thumb" />
+            </span>
+          </button>
+          <button className="btn-icon btn-icon-danger" onClick={onDelete} title="Delete">
+            <Trash2 size={14} />
+          </button>
         </div>
       </div>
-      <div className="automation-row-stats">
-        <span className="automation-stat">{a.run_count} runs</span>
-        {a.last_run_at && (
-          <span className="automation-stat">Last: {new Date(a.last_run_at).toLocaleDateString()}</span>
-        )}
-      </div>
-      <div className="automation-row-actions">
-        <button
-          className={`automation-toggle${a.is_active ? ' on' : ''}`}
-          onClick={onToggle}
-          title={a.is_active ? 'Disable' : 'Enable'}
-        >
-          {a.is_active ? <ToggleRight size={24} /> : <ToggleLeft size={24} />}
-        </button>
-        <button className="btn btn-danger btn-sm" onClick={onDelete}>
-          <Trash2 size={13} />
-        </button>
+      <div className="automation-flow">
+        <div className="automation-flow-block automation-flow-trigger">
+          <span className="automation-flow-label">WHEN</span>
+          <span className="automation-flow-text">{triggerSummary()}</span>
+        </div>
+        <ArrowRight size={13} className="automation-flow-arrow" />
+        <div className="automation-flow-block automation-flow-action">
+          <span className="automation-flow-label">THEN</span>
+          <span className="automation-flow-text">{actionSummary()}</span>
+        </div>
+        <div className="automation-flow-spacer" />
+        <div className="automation-meta">
+          <span>{a.run_count} runs</span>
+          {a.last_run_at && <span>Last run {new Date(a.last_run_at).toLocaleDateString()}</span>}
+        </div>
       </div>
     </div>
   );
