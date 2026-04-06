@@ -100,32 +100,4 @@ class AuthController extends Controller
 
         return response()->json($user->load('company'));
     }
-
-    public function updateProfile(Request $request)
-    {
-        $user = $request->user();
-
-        $data = $request->validate([
-            'name'                  => 'required|string|max:255',
-            'email'                 => 'required|email|unique:users,email,' . $user->id,
-            'current_password'      => 'nullable|string',
-            'password'              => 'nullable|string|min:8|confirmed',
-        ]);
-
-        if (!empty($data['current_password'])) {
-            if (!Hash::check($data['current_password'], $user->password)) {
-                return response()->json(['message' => 'Current password is incorrect.'], 422);
-            }
-        }
-
-        $user->name  = $data['name'];
-        $user->email = $data['email'];
-
-        if (!empty($data['password'])) {
-            $user->password = Hash::make($data['password']);
-        }
-
-        $user->save();
-
-        return response()->json($user->load('company'));
-    }
+}
