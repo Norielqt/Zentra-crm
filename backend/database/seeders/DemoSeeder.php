@@ -45,33 +45,48 @@ class DemoSeeder extends Seeder
         );
 
         // ── Leads ─────────────────────────────────────────────────────
+        // months_ago → spreads created_at for realistic revenue-over-time charts
         $leadsData = [
-            // New Lead
-            ['name' => 'Marcus Johnson',    'email' => 'marcus.j@techwave.io',    'phone' => '+1 555-0101', 'source' => 'Website',          'status' => 'New Lead',  'deal_value' => 12000,  'assigned_user_id' => $admin->id,  'notes' => 'Reached out through contact form. Interested in enterprise plan.'],
-            ['name' => 'Priya Nair',        'email' => 'priya.nair@influx.co',    'phone' => '+1 555-0102', 'source' => 'LinkedIn',         'status' => 'New Lead',  'deal_value' => 8500,   'assigned_user_id' => $member->id, 'notes' => 'Connected on LinkedIn. Needs a demo of the pipeline module.'],
-            ['name' => 'Daniel Reyes',      'email' => 'd.reyes@constructly.com', 'phone' => '+1 555-0103', 'source' => 'Cold Call',        'status' => 'New Lead',  'deal_value' => 5000,   'assigned_user_id' => $admin->id,  'notes' => 'Called in during outreach campaign. Requested pricing sheet.'],
-            // Contacted
-            ['name' => 'Sofia Müller',      'email' => 'sofia.m@growthlab.de',    'phone' => '+49 30 5550104', 'source' => 'Referral',      'status' => 'Contacted', 'deal_value' => 22000,  'assigned_user_id' => $admin->id,  'notes' => 'Referred by existing client. Had intro call. Very interested.'],
-            ['name' => 'James Okafor',      'email' => 'j.okafor@nexusretail.ng', 'phone' => '+234 800 5550105', 'source' => 'Email Campaign', 'status' => 'Contacted', 'deal_value' => 9800, 'assigned_user_id' => $member->id, 'notes' => 'Responded to Q2 email campaign. Scheduled a follow-up call.'],
-            ['name' => 'Lena Bergström',    'email' => 'lena.b@nordicSaaS.se',   'phone' => '+46 8 5550106', 'source' => 'Website',         'status' => 'Contacted', 'deal_value' => 14500,  'assigned_user_id' => $admin->id,  'notes' => 'Downloaded whitepaper. Had first call — good budget fit.'],
-            // Qualified
-            ['name' => 'Carlos Mendoza',    'email' => 'c.mendoza@agroplex.mx',   'phone' => '+52 55 5550107', 'source' => 'Referral',      'status' => 'Qualified', 'deal_value' => 31000,  'assigned_user_id' => $admin->id,  'notes' => 'Qualified after discovery call. Decision maker confirmed. Strong fit.'],
-            ['name' => 'Yuki Tanaka',       'email' => 'yuki.t@smartflow.jp',     'phone' => '+81 3 5550108', 'source' => 'LinkedIn',        'status' => 'Qualified', 'deal_value' => 18000,  'assigned_user_id' => $member->id, 'notes' => 'Clear pain points. Currently using spreadsheets — low friction switch.'],
-            // Proposal
-            ['name' => 'Ingrid Larsson',    'email' => 'ingrid.l@finvolve.se',    'phone' => '+46 70 5550109', 'source' => 'Cold Call',      'status' => 'Proposal',  'deal_value' => 47000,  'assigned_user_id' => $admin->id,  'notes' => 'Proposal sent 3 days ago. Awaiting sign-off from CFO.'],
-            ['name' => 'Amara Diallo',      'email' => 'amara.d@luminary.sn',     'phone' => '+221 77 5550110', 'source' => 'Website',      'status' => 'Proposal',  'deal_value' => 25000,  'assigned_user_id' => $admin->id,  'notes' => 'Signed NDA. Proposal under legal review. High priority.'],
-            // Closed
-            ['name' => 'Tom Fischer',       'email' => 'tom.f@buildright.de',     'phone' => '+49 89 5550111', 'source' => 'Referral',       'status' => 'Closed',    'deal_value' => 38000,  'assigned_user_id' => $admin->id,  'notes' => 'Deal closed. Contract signed. Onboarding scheduled for next week.'],
-            ['name' => 'Nina Kovač',        'email' => 'nina.k@datapulse.hr',     'phone' => '+385 91 5550112', 'source' => 'LinkedIn',     'status' => 'Closed',    'deal_value' => 21000,  'assigned_user_id' => $member->id, 'notes' => 'Closed after 3 demos. Annual contract. Upsell opportunity in Q3.'],
-            ['name' => 'Raj Patel',         'email' => 'raj.p@cloudscale.in',     'phone' => '+91 98 5550113', 'source' => 'Email Campaign', 'status' => 'Closed',   'deal_value' => 15500,  'assigned_user_id' => $admin->id,  'notes' => 'Fast close — 10-day sales cycle. Great reference account.'],
+            // New Lead  (created ~1 month ago)
+            ['name' => 'Marcus Johnson',    'email' => 'marcus.j@techwave.io',    'phone' => '+1 555-0101', 'source' => 'Website',          'status' => 'New Lead',  'deal_value' => 12000,  'assigned_user_id' => $admin->id,  'notes' => 'Reached out through contact form. Interested in enterprise plan.', 'months_ago' => 1],
+            ['name' => 'Priya Nair',        'email' => 'priya.nair@influx.co',    'phone' => '+1 555-0102', 'source' => 'LinkedIn',         'status' => 'New Lead',  'deal_value' => 8500,   'assigned_user_id' => $member->id, 'notes' => 'Connected on LinkedIn. Needs a demo of the pipeline module.', 'months_ago' => 1],
+            ['name' => 'Daniel Reyes',      'email' => 'd.reyes@constructly.com', 'phone' => '+1 555-0103', 'source' => 'Cold Call',        'status' => 'New Lead',  'deal_value' => 5000,   'assigned_user_id' => $admin->id,  'notes' => 'Called in during outreach campaign. Requested pricing sheet.', 'months_ago' => 1],
+            // Contacted (created ~2 months ago)
+            ['name' => 'Sofia Müller',      'email' => 'sofia.m@growthlab.de',    'phone' => '+49 30 5550104', 'source' => 'Referral',      'status' => 'Contacted', 'deal_value' => 22000,  'assigned_user_id' => $admin->id,  'notes' => 'Referred by existing client. Had intro call. Very interested.', 'months_ago' => 2],
+            ['name' => 'James Okafor',      'email' => 'j.okafor@nexusretail.ng', 'phone' => '+234 800 5550105', 'source' => 'Email Campaign', 'status' => 'Contacted', 'deal_value' => 9800, 'assigned_user_id' => $member->id, 'notes' => 'Responded to Q2 email campaign. Scheduled a follow-up call.', 'months_ago' => 2],
+            ['name' => 'Lena Bergström',    'email' => 'lena.b@nordicSaaS.se',   'phone' => '+46 8 5550106', 'source' => 'Website',         'status' => 'Contacted', 'deal_value' => 14500,  'assigned_user_id' => $admin->id,  'notes' => 'Downloaded whitepaper. Had first call — good budget fit.', 'months_ago' => 2],
+            // Qualified (created ~3 months ago)
+            ['name' => 'Carlos Mendoza',    'email' => 'c.mendoza@agroplex.mx',   'phone' => '+52 55 5550107', 'source' => 'Referral',      'status' => 'Qualified', 'deal_value' => 31000,  'assigned_user_id' => $admin->id,  'notes' => 'Qualified after discovery call. Decision maker confirmed. Strong fit.', 'months_ago' => 3],
+            ['name' => 'Yuki Tanaka',       'email' => 'yuki.t@smartflow.jp',     'phone' => '+81 3 5550108', 'source' => 'LinkedIn',        'status' => 'Qualified', 'deal_value' => 18000,  'assigned_user_id' => $member->id, 'notes' => 'Clear pain points. Currently using spreadsheets — low friction switch.', 'months_ago' => 3],
+            // Proposal (created ~4 months ago)
+            ['name' => 'Ingrid Larsson',    'email' => 'ingrid.l@finvolve.se',    'phone' => '+46 70 5550109', 'source' => 'Cold Call',      'status' => 'Proposal',  'deal_value' => 47000,  'assigned_user_id' => $admin->id,  'notes' => 'Proposal sent 3 days ago. Awaiting sign-off from CFO.', 'months_ago' => 4],
+            ['name' => 'Amara Diallo',      'email' => 'amara.d@luminary.sn',     'phone' => '+221 77 5550110', 'source' => 'Website',      'status' => 'Proposal',  'deal_value' => 25000,  'assigned_user_id' => $admin->id,  'notes' => 'Signed NDA. Proposal under legal review. High priority.', 'months_ago' => 4],
+            // Closed (created ~5-6 months ago)
+            ['name' => 'Tom Fischer',       'email' => 'tom.f@buildright.de',     'phone' => '+49 89 5550111', 'source' => 'Referral',       'status' => 'Closed',    'deal_value' => 38000,  'assigned_user_id' => $admin->id,  'notes' => 'Deal closed. Contract signed. Onboarding scheduled for next week.', 'months_ago' => 5],
+            ['name' => 'Nina Kovač',        'email' => 'nina.k@datapulse.hr',     'phone' => '+385 91 5550112', 'source' => 'LinkedIn',     'status' => 'Closed',    'deal_value' => 21000,  'assigned_user_id' => $member->id, 'notes' => 'Closed after 3 demos. Annual contract. Upsell opportunity in Q3.', 'months_ago' => 6],
+            ['name' => 'Raj Patel',         'email' => 'raj.p@cloudscale.in',     'phone' => '+91 98 5550113', 'source' => 'Email Campaign', 'status' => 'Closed',   'deal_value' => 15500,  'assigned_user_id' => $admin->id,  'notes' => 'Fast close — 10-day sales cycle. Great reference account.', 'months_ago' => 5],
         ];
 
         $leads = [];
         foreach ($leadsData as $data) {
-            $leads[] = Lead::firstOrCreate(
+            $monthsAgo = $data['months_ago'];
+            unset($data['months_ago']);
+
+            $lead = Lead::firstOrCreate(
                 ['email' => $data['email'], 'company_id' => $company->id],
                 array_merge($data, ['company_id' => $company->id])
             );
+
+            // Backdate created_at so revenue-over-time charts show realistic spread
+            if ($lead->wasRecentlyCreated) {
+                \DB::table('leads')->where('id', $lead->id)->update([
+                    'created_at' => now()->subMonths($monthsAgo)->startOfMonth()->addDays(rand(0, 20)),
+                    'updated_at' => now()->subMonths($monthsAgo)->startOfMonth()->addDays(rand(0, 20)),
+                ]);
+                $lead->refresh();
+            }
+
+            $leads[] = $lead;
         }
 
         // ── Clients (from closed leads) ───────────────────────────────

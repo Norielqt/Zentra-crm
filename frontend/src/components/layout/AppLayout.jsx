@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Users, UserCheck, CheckSquare, Zap, Settings2, LogOut, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, Users, UserCheck, CheckSquare, Zap, Settings2, LogOut, Sun, Moon, BarChart2 } from 'lucide-react';
 import GlobalSearch from '../ui/GlobalSearch';
 
 const NAV_ITEMS = [
@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { to: '/clients',     label: 'Clients',     icon: UserCheck },
   { to: '/tasks',       label: 'Tasks',       icon: CheckSquare },
   { to: '/automations', label: 'Automations', icon: Zap },
+  { to: '/analytics',   label: 'Analytics',   icon: BarChart2 },
 ];
 
 const ADMIN_NAV_ITEMS = [

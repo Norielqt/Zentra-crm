@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AutomationController;
 use App\Http\Controllers\ClientController;
@@ -30,6 +31,7 @@ Route::middleware(['auth:sanctum', 'company.tenant'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/analytics', [AnalyticsController::class, 'index']);
     Route::get('/insights', [InsightsController::class, 'index']);
     Route::get('/onboarding', [OnboardingController::class, 'index']);
 

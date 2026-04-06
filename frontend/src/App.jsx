@@ -11,6 +11,7 @@ import ClientsPage from './pages/clients/ClientsPage';
 import ClientDetailPage from './pages/clients/ClientDetailPage';
 import TasksPage from './pages/tasks/TasksPage';
 import AutomationsPage from './pages/automations/AutomationsPage';
+import AnalyticsPage from './pages/analytics/AnalyticsPage';
 import TeamPage from './pages/team/TeamPage';
 
 function PrivateRoute({ children }) {
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="clients/:id" element={<ClientDetailPage />} />
           <Route path="tasks" element={<TasksPage />} />
           <Route path="automations" element={<AutomationsPage />} />
+          <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="team" element={<TeamPage />} />
         </Route>
       </Routes>
