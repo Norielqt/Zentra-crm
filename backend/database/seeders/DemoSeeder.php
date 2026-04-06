@@ -25,7 +25,7 @@ class DemoSeeder extends Seeder
         $admin = User::firstOrCreate(
             ['email' => 'demo.zentracrm@gmail.com'],
             [
-                'name'       => 'Alex Rivera',
+                'name'       => 'Demo',
                 'email'      => 'demo.zentracrm@gmail.com',
                 'password'   => Hash::make('demo.zentracrm'),
                 'role'       => 'admin',
