@@ -109,7 +109,7 @@ export default function AppLayout() {
         </nav>
 
         <div className="sidebar-footer">
-          <div className="sidebar-user">
+          <div className="sidebar-user" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }} title="Edit profile">
             <div className="sidebar-user-avatar">{initials}</div>
             <div className="sidebar-user-info">
               <div className="sidebar-user-name">{user?.name}</div>
@@ -119,7 +119,7 @@ export default function AppLayout() {
             </div>
             <button
               className="dark-toggle"
-              onClick={() => setDark((d) => !d)}
+              onClick={(e) => { e.stopPropagation(); setDark((d) => !d); }}
               title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {dark ? <Sun size={14} /> : <Moon size={14} />}

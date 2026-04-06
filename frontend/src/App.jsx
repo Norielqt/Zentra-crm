@@ -13,6 +13,7 @@ import TasksPage from './pages/tasks/TasksPage';
 import AutomationsPage from './pages/automations/AutomationsPage';
 import AnalyticsPage from './pages/analytics/AnalyticsPage';
 import TeamPage from './pages/team/TeamPage';
+import ProfilePage from './pages/profile/ProfilePage';
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="automations" element={<AutomationsPage />} />
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="team" element={<TeamPage />} />
+          <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
