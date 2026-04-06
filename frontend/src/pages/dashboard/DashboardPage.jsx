@@ -24,11 +24,11 @@ const STATUS_TRACK_COLORS = {
 };
 
 const INSIGHT_CONFIG = {
-  urgent:  { icon: AlertTriangle, color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Urgent' },
-  warning: { icon: AlertCircle,   color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Heads up' },
-  action:  { icon: Zap,           color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Opportunity' },
-  info:    { icon: Info,          color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Info' },
-  success: { icon: CheckCircle2,  color: '#003148', bg: 'var(--primary-light)', border: '#C8DAE4', label: 'Great work' },
+  urgent:  { icon: AlertTriangle, label: 'Urgent',      type: 'urgent'  },
+  warning: { icon: AlertCircle,   label: 'Heads up',    type: 'warning' },
+  action:  { icon: Zap,           label: 'Opportunity', type: 'action'  },
+  info:    { icon: Info,          label: 'Info',        type: 'info'    },
+  success: { icon: CheckCircle2,  label: 'Great work',  type: 'success' },
 };
 
 const ONBOARDING_DISMISSED_KEY = (userId) => `zentra_onboarding_dismissed_${userId}`;
@@ -284,8 +284,8 @@ function InsightsPanel({ insights, loading, refreshing, onRefresh }) {
             <Sparkles size={15} />
           </div>
           <div>
-            <div className="insights-title">AI Assistant</div>
-            <div className="insights-subtitle">Here to help you stay on track</div>
+            <div className="insights-title">AI Insights</div>
+            <div className="insights-subtitle">{insights.length > 0 ? `${insights.length} recommendations for you` : 'Analyzing your pipeline…'}</div>
           </div>
         </div>
         <button
@@ -300,33 +300,33 @@ function InsightsPanel({ insights, loading, refreshing, onRefresh }) {
 
       <div className="insights-body">
         {loading ? (
-          <div className="insights-loading">
-            <div className="insights-skeleton" />
-            <div className="insights-skeleton" style={{ width: '80%' }} />
-            <div className="insights-skeleton" style={{ width: '90%' }} />
+          <>
+            <div className="insights-skeleton-card" />
+            <div className="insights-skeleton-card" />
+            <div className="insights-skeleton-card" />
+          </>
+        ) : insights.length === 0 ? (
+          <div className="insights-empty">
+            <CheckCircle2 size={28} />
+            <p>You're all caught up! No action items right now.</p>
           </div>
         ) : (
           insights.map((insight, i) => {
             const cfg = INSIGHT_CONFIG[insight.type] || INSIGHT_CONFIG.info;
             const Icon = cfg.icon;
             return (
-              <div
-                key={i}
-                className="insight-card"
-                style={{ background: cfg.bg, borderColor: cfg.border }}
-              >
-                <div className="insight-card-top">
-                  <div className="insight-type-badge" style={{ color: cfg.color, background: `${cfg.color}18` }}>
+              <div key={i} className={`insight-card insight-card--${cfg.type}`}>
+                <div className="insight-card-header">
+                  <div className="insight-type-pill">
                     <Icon size={11} />
                     {cfg.label}
                   </div>
-                  <span className="insight-card-title" style={{ color: cfg.color }}>{insight.title}</span>
                 </div>
+                <div className="insight-card-title">{insight.title}</div>
                 <p className="insight-card-message">{insight.message}</p>
                 {insight.action && (
                   <button
-                    className="insight-action-btn"
-                    style={{ color: cfg.color, borderColor: `${cfg.color}30`, background: `${cfg.color}0D` }}
+                    className="insight-action-link"
                     onClick={() => navigate(insight.action.path)}
                   >
                     {insight.action.label}
