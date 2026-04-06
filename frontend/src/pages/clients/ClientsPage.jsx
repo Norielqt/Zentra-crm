@@ -3,17 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { Plus, Search, Download, UserCheck } from 'lucide-react';
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 
 export default function ClientsPage() {
   const [clients, setClients] = useState([]);
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => { fetchClients(); }, []);
 
   const fetchClients = () =>
-    api.get('/clients').then(({ data }) => setClients(data));
+    api.get('/clients').then(({ data }) => setClients(data)).finally(() => setPageLoading(false));
+
+  if (pageLoading) return <LoadingScreen />;
 
   const filtered = clients.filter(
     (c) =>

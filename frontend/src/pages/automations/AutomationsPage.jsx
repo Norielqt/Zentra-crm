@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Plus, Zap, Trash2, ArrowRight } from 'lucide-react';
 import api from '../../api/axios';
 import Modal from '../../components/ui/Modal';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 
 const TRIGGER_EVENTS = [
   { value: 'lead_created',        label: 'Lead is created' },
@@ -76,7 +77,7 @@ export default function AutomationsPage() {
         </div>
 
         {loading ? (
-          <div className="text-muted" style={{ padding: '40px 0', textAlign: 'center' }}>Loading…</div>
+          <LoadingScreen />
         ) : automations.length === 0 ? (
           <div className="automation-empty">
             <Zap size={40} strokeWidth={1.5} color="var(--text-light)" />

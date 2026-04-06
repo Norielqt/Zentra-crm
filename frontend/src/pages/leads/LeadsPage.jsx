@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 import {
   DndContext,
   PointerSensor,
@@ -38,6 +39,7 @@ export default function LeadsPage() {
   const [leads, setLeads]       = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [activeId, setActiveId] = useState(null);
+  const [pageLoading, setPageLoading] = useState(true);
   const { isAdmin }             = useAuth();
   const navigate                = useNavigate();
 
@@ -48,8 +50,10 @@ export default function LeadsPage() {
   useEffect(() => { fetchLeads(); }, []);
 
   const fetchLeads = () => {
-    api.get('/leads').then(({ data }) => setLeads(data));
+    api.get('/leads').then(({ data }) => setLeads(data)).finally(() => setPageLoading(false));
   };
+
+  if (pageLoading) return <LoadingScreen />;
 
   const leadsByStage   = (stage) => leads.filter((l) => l.status === stage);
   const revenueByStage = (stage) => leads

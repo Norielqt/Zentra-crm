@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, CheckSquare } from 'lucide-react';
 import api from '../../api/axios';
 import Badge from '../../components/ui/Badge';
+import LoadingScreen from '../../components/ui/LoadingScreen';
 import Modal from '../../components/ui/Modal';
 import { Link } from 'react-router-dom';
 
@@ -12,10 +13,16 @@ export default function TasksPage() {
   const [filter, setFilter] = useState('all');
   const [showModal, setShowModal] = useState(false);
   const [editTask, setEditTask] = useState(null);
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => { fetchTasks(); }, []);
 
-  const fetchTasks = () => api.get('/tasks').then(({ data }) => setTasks(data));
+  const fetchTasks = (showLoader = false) => {
+    if (showLoader) setPageLoading(true);
+    api.get('/tasks').then(({ data }) => setTasks(data)).finally(() => setPageLoading(false));
+  };
+
+  if (pageLoading) return <LoadingScreen />;
 
   const filtered = filter === 'all' ? tasks : tasks.filter((t) => t.status === filter);
 
